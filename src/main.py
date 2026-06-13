@@ -27,6 +27,14 @@ def generate_page(from_path: str, template_path: str, dest_path: str):
     with open(dest_path, "w") as d:
         d.write(template)
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    for item in os.listdir(dir_path_content):
+        if os.path.isfile(os.path.join(dir_path_content, item)):
+            if item[-3:] == ".md":
+                generate_page(os.path.join(dir_path_content, item), template_path, os.path.join(dest_dir_path, ".".join([item[:-3], "html"])))
+        else:
+            generate_pages_recursive(os.path.join(dir_path_content, item), template_path, os.path.join(dest_dir_path, item))
+
 
 source= "./static"
 destination= "./public"
@@ -37,6 +45,6 @@ def main():
 
     copystatic(source, destination)
 
-    generate_page("./content/index.md", "./template.html", "./public/index.html")
+    generate_pages_recursive("./content", "./template.html", "./public")
 
 main()
