@@ -3,7 +3,7 @@ import os
 import shutil
 
 
-def copystatic(source_dir: str, dest_dir: str) -> None :
+def copy_files_recursive(source_dir: str, dest_dir: str) -> None :
     if not os.path.exists(dest_dir):
         os.mkdir(dest_dir)
 
@@ -14,4 +14,4 @@ def copystatic(source_dir: str, dest_dir: str) -> None :
         if os.path.isfile(from_path):
             shutil.copy(from_path, to_path)
         else:
-            copystatic(from_path, to_path)
+            copy_files_recursive(from_path, to_path)
